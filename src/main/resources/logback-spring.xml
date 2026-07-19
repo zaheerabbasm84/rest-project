@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <!-- APPLICATION NAME -->
+    <springProperty scope="context"
+                    name="APP_NAME"
+                    source="spring.application.name"/>
+
+    <!-- LOG DIRECTORY -->
+    <property name="LOG_PATH" value="logs"/>
+
+    <!-- LOG PATTERN -->
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss}
+                     [${APP_NAME}]
+                     [%thread]
+                     %-5level
+                     %logger{36}
+                     - %msg%n"/>
+
+    <!-- CONSOLE APPENDER -->
+    <appender name="CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
+
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- MAIN FILE APPENDER -->
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- CURRENT LOG FILE -->
+        <file>${LOG_PATH}/${APP_NAME}.log</file>
+
+        <!-- DAILY ROLLING -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <fileNamePattern>
+                ${LOG_PATH}/${APP_NAME}-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+
+            <!-- KEEP 30 DAYS -->
+            <maxHistory>30</maxHistory>
+
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- ERROR LOG FILE -->
+    <appender name="ERROR_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${LOG_PATH}/${APP_NAME}-error.log</file>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <fileNamePattern>
+                ${LOG_PATH}/${APP_NAME}-error-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+
+            <maxHistory>30</maxHistory>
+
+        </rollingPolicy>
+
+        <!-- ONLY ERROR LOGS -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- APPLICATION PACKAGE -->
+    <logger name="com.example.restdemo"
+            level="DEBUG"/>
+
+    <!-- HIBERNATE SQL -->
+    <logger name="org.hibernate.SQL"
+            level="DEBUG"/>
+
+    <!-- ROOT LOGGER -->
+    <root level="INFO">
+
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+
+    </root>
+
+</configuration>
