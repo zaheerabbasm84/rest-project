@@ -1,0 +1,11 @@
+git checkout platform-dev
+
+git pull
+
+# Write code
+
+git add .
+
+git commit -m "Added employee CRUD API"
+
+git push
