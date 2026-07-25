@@ -109,6 +109,19 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-spring</artifactId>
+			<version>3.49.1</version>
+		</dependency>
+
+		<!-- Optional but Recommended: For Developer-Friendly Interface/DAO Mappings -->
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-sqlobject</artifactId>
+			<version>3.49.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

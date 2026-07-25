@@ -67,4 +67,11 @@ public class UserController {
         System.out.println("User is ::" + result.getResult());
         return ApiResponse.buildWithPayload(new Payload<UserDTO>().addObjects(result.getResult()).setCursor(result.getCursor())).setStatus("OK");
     }
+
+    @GetMapping("/getAllUsersJdbiDTO")
+    public ApiResponse getAllUsersJdbiDTO() throws SQLException {
+        DataBaseResult<UserDTO> result = userService.getAllUserJdbiDTO();
+        System.out.println("User is ::" + result.getResult());
+        return ApiResponse.buildWithPayload(new Payload<UserDTO>().addObjects(result.getResult()).setCursor(result.getCursor())).setStatus("OK");
+    }
 }
