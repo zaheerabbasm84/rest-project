@@ -98,5 +98,15 @@ public class UserService {
         allUser.addAll(userRepositoryImpl.getUsers("SELECT * FROM users"));
         return new DataBaseResult<>(allUser,1,1,allUser.size(),1);
     }
+
+    public DataBaseResult<UserDTO> getAllUserJdbiDTO() throws SQLException {
+        System.out.println("CURRENT TENANT"+TenantContext.getTenant());
+        List<UserDTO> allUser= userRepositoryImpl.getUsersJdbi();
+        log.info("ERROR WHILE GETTING");
+        TenantContext.setTenant("authentication");
+        System.out.println("CURRENT TENANT "+TenantContext.getTenant());
+        allUser.addAll(userRepositoryImpl.getUsersJdbi());
+        return new DataBaseResult<>(allUser,1,1,allUser.size(),1);
+    }
     
 }
